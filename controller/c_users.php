@@ -7,7 +7,7 @@
             $action = $_GET['action'];
             $function = $action;
         }
-        $function($data);
+        $function($data); //login($data)
     }
     function view(&$data){
         // $data['student_data'] = m_get_pageData();
@@ -19,7 +19,17 @@
     function loginValidation(){
         $data=login_employee();
     }
+    function register(&$data){
+        $data['page']="register";
+    }
 
-
+    function addUser(&$data) {
+        $data= register_imployee();
+        if($data) {
+            header("location:index.php?action=view");
+        } else {
+            header("location:index.php?action=register");
+        }
+    }
 
 ?>
