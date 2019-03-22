@@ -22,7 +22,20 @@ function login_employee(){
         }
     
     }
+function register_imployee() {
+    $name = $_POST['username'];
+    $pass = $_POST['pwd'];
+    $cpass = $_POST['con_pass'];
+    if ($pass == $cpass) {
+        include "connection.php";
+        $query = "INSERT INTO users(username, password) VALUES('$name', '$pass')";
+        $insert = mysqli_query($conn, $query);
+        return $insert;
+    } else {
+        header("location: index.php?action=register");
+    }
     
+}   
 
 
 
