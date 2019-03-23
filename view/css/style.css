@@ -7,3 +7,7 @@
     height: 100px;
     overflow: auto;
 }
+
+#but_logout{
+    float: right;
+}

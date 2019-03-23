@@ -37,5 +37,11 @@
             header("location:index.php?action=register");
         }
     }
-
+    function logout(&$data){
+        // logout
+        if(isset($_POST['but_logout'])){
+            session_destroy();
+            header('Location: index.php');
+        }
+    }
 ?>
