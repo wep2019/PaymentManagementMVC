@@ -22,6 +22,20 @@ function login_employee(){
         }
     
     }
+    function m_get_pageData(){
+        $query = " SELECT * FROM category";
+        include 'connection.php';
+        $result = mysqli_query($conn , $query);
+
+        $rows = [];
+
+        if($result && mysqli_num_rows($result) > 0){
+            while ($get_result_to_array = mysqli_fetch_array($result,MYSQLI_ASSOC)){
+                $rows[] = $get_result_to_array;
+            }
+        }
+        return $rows;
+    }
 function register_imployee() {
     $name = $_POST['username'];
     $pass = $_POST['pwd'];

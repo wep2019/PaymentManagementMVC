@@ -10,9 +10,15 @@
         $function($data); //login($data)
     }
     function view(&$data){
-        // $data['student_data'] = m_get_pageData();
+        $data['category_data'] = m_get_pageData();
         $data['page']="pages/view";
     }
+
+    function add(&$data){
+        $data['page'] = 'pages/makePayment';
+    }
+    
+    
     function login(&$data){
         $data['page']="login";
     }

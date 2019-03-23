@@ -22,38 +22,34 @@
         <thead class="bg-dark text-white">
             <tr>
                 <th>Category</th>
-                <th>Products</th>
                 <th>Price</th>
                 <th>Date</th>
-                <th>Total</th>
+                <th>Amount</th>
                 <th>Status</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
+        <?php foreach($data['category_data'] as $rows){?>
             <tr>
-                <td>Foods</td>
-                <td>Rice</td>
-                <td>4000 reils</td>
-                <td>03/03/2019</td>
-                <td>4000 reils</td>
-                <td>Morning</td>
+                <td><?php echo $rows['catname']?></td>
+                <td><?php echo $rows['price']?> Reils</td>
+                <td><?php echo $rows['date_at']?> </td>
+                <td><?php echo $rows['amount']?></td>
+                <td><?php echo $rows['status']?></td>
+                <td>
+                    <a href="#" class="text-success"><i class="material-icons">create</i></a>
+                    <a href="#" class="text-danger"><i class="material-icons">delete</i></a>
+                    <a href="#" class="text-info"><i class="material-icons">visibility</i></a>
+                </td>
             </tr>
-            <tr>
-                <td>Rental House</td>
-                <td>House Bill</td>
-                <td>48000 reils</td>
-                <td>03/04/2019</td>
-                <td>48000 reils</td>
-                <td>Evening</td>
-            </tr>
-            <tr>
-                <td>Rental House</td>
-                <td>Water Bill</td>
-                <td>12000 reils</td>
-                <td>03/04/2019</td>
-                <td>12000 reils</td>
-                <td>Evening</td>
-            </tr>
+        <?php }?>
         </tbody>
+        <tfoot class="bg-secondary text-center text-white">
+            <tr>
+                <td colspan="4"><h4>4000000 Reils</h4></td>
+                <td colspan="2"><h4>Total</h4></td>
+            </tr>
+        </tfoot>
     </table>
 </div>

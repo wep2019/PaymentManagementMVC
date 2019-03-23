@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2019 at 05:24 PM
+-- Generation Time: Mar 23, 2019 at 03:57 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -33,8 +33,21 @@ CREATE TABLE `category` (
   `catname` varchar(255) NOT NULL,
   `price` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
-  `status` varchar(255) NOT NULL
+  `status` varchar(255) NOT NULL,
+  `date_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`catid`, `catname`, `price`, `amount`, `status`, `date_at`) VALUES
+(1, 'Rental House Bill', 48000, 2, 'Evening', '2019-03-19 16:52:24'),
+(2, 'Foods ', 4000, 1, 'Afternoon', '2019-03-19 16:52:24'),
+(3, 'Study Materials', 20000, 3, 'Morning', '2019-03-19 16:52:24'),
+(4, 'Cleaning Materials', 15000, 5, 'Morning', '2019-03-19 16:52:24'),
+(5, 'Dinner', 20000, 1, 'Evening', '2019-03-19 17:17:01'),
+(6, 'Phone Card', 4000, 1, 'afternoon', '2019-03-19 17:17:28');
 
 -- --------------------------------------------------------
 
@@ -47,6 +60,16 @@ CREATE TABLE `students_category` (
   `cat_id` int(11) DEFAULT NULL,
   `stuid` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `students_category`
+--
+
+INSERT INTO `students_category` (`stuCat_id`, `cat_id`, `stuid`) VALUES
+(1, 1, 1),
+(2, 2, 2),
+(3, 4, 2),
+(4, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -63,6 +86,14 @@ CREATE TABLE `tblstudents` (
   `phone` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `tblstudents`
+--
+
+INSERT INTO `tblstudents` (`stu_id`, `username`, `email`, `gender`, `batch`, `phone`) VALUES
+(1, 'Bunsin', 'bunsinnanh22@gmail.com', 'Male', 'WEP 2019', 979290546),
+(2, 'Kosorl ', 'kosorl@gmail.com', 'Male', 'WEP 2019', 986767674);
+
 -- --------------------------------------------------------
 
 --
@@ -70,18 +101,19 @@ CREATE TABLE `tblstudents` (
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `password` varchar(11) NOT NULL,
+  `studentid` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`) VALUES
-(1, 'bunsinnanh', '1234567'),
-(2, 'kosorl', '12345');
+INSERT INTO `users` (`user_id`, `username`, `password`, `studentid`) VALUES
+(1, 'Bunsin', '123', 1),
+(2, 'Chanmohakosorl', '1234', 2);
 
 --
 -- Indexes for dumped tables
@@ -105,13 +137,15 @@ ALTER TABLE `students_category`
 -- Indexes for table `tblstudents`
 --
 ALTER TABLE `tblstudents`
-  ADD PRIMARY KEY (`stu_id`);
+  ADD PRIMARY KEY (`stu_id`),
+  ADD UNIQUE KEY `stu_id` (`stu_id`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`user_id`),
+  ADD KEY `studentIdFK` (`studentid`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -121,25 +155,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `catid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `catid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `students_category`
 --
 ALTER TABLE `students_category`
-  MODIFY `stuCat_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `stuCat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tblstudents`
 --
 ALTER TABLE `tblstudents`
-  MODIFY `stu_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `stu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -151,6 +185,12 @@ ALTER TABLE `users`
 ALTER TABLE `students_category`
   ADD CONSTRAINT `catID` FOREIGN KEY (`cat_id`) REFERENCES `category` (`catid`),
   ADD CONSTRAINT `stuID` FOREIGN KEY (`stuid`) REFERENCES `tblstudents` (`stu_id`);
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `studentIdFK` FOREIGN KEY (`studentid`) REFERENCES `tblstudents` (`stu_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
